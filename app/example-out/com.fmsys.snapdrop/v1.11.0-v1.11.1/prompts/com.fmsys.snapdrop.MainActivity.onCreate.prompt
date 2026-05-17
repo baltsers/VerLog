@@ -1,0 +1,78 @@
+**App Description**: Transfer files seamlessly between all your devices - Snapdrop.
+**Entry Method Signature**: <com.fmsys.snapdrop.MainActivity: void onCreate(android.os.Bundle)>
+**Method Line Number(start,end)**: (120, 223)
+**Commit Messages between two versions**:
+	1. make links clickable in attribution section
+	2. add Material Design 3 for the app icon
+	3. Update translation_validation.yaml
+	4. New Crowdin updates (#216)
+	5. Update README.md
+	6. some cleanup
+	7. New Bugfix Release - v1.11.1
+**Partial call graph**:
+	- **Nodes(Reachable methods(and their changes) from entry method)**:
+
+		0. <com.fmsys.snapdrop.MainActivity: void onCreate(android.os.Bundle)>
+			Changed code in this method:
+				@@ -219,7 +218,7 @@ 
+				 
+				         binding.pullToRefresh.setOnRefreshListener(() -> refreshWebsite(true));
+				 
+				-        splashScreen.setKeepOnScreenCondition(() -> currentlyLoading);
+				+        splashScreen.setKeepOnScreenCondition(state::isCurrentlyStarting);
+				     }
+		1. <androidx.appcompat.app.AppCompatActivity: androidx.appcompat.app.ActionBar getSupportActionBar()>
+		2. <android.content.ContextWrapper: android.content.Context getApplicationContext()>
+		3. <com.fmsys.snapdrop.ObservableProperty: void setOnChangedListener(androidx.core.util.Consumer)>
+		4. <android.content.Context: java.lang.String getString(int)>
+		5. <android.content.ContextWrapper: android.content.pm.ApplicationInfo getApplicationInfo()>
+		6. <androidx.core.content.ContextCompat: int checkSelfPermission(android.content.Context,java.lang.String)>
+		7. <android.webkit.WebView: void setWebContentsDebuggingEnabled(boolean)>
+		8. <androidx.appcompat.app.AppCompatActivity: void setSupportActionBar(androidx.appcompat.widget.Toolbar)>
+		9. <com.fmsys.snapdrop.MainActivity: boolean isTablet(android.content.Context)>
+		10. <com.fmsys.snapdrop.SnapdropApplication: boolean isDarkTheme(android.content.Context)>
+		11. <androidx.core.splashscreen.SplashScreen: androidx.core.splashscreen.SplashScreen installSplashScreen(android.app.Activity)>
+		12. <android.webkit.CookieManager: android.webkit.CookieManager getInstance()>
+		13. <androidx.webkit.WebSettingsCompat: void setForceDark(android.webkit.WebSettings,int)>
+		14. <android.app.Activity: void requestPermissions(java.lang.String[],int)>
+		15. <com.fmsys.snapdrop.MainActivity: void refreshWebsite()>
+		16. <android.app.Activity: boolean requestWindowFeature(int)>
+		17. <androidx.fragment.app.FragmentActivity: void onCreate(android.os.Bundle)>
+		18. <com.fmsys.snapdrop.databinding.ActivityMainBinding: com.fmsys.snapdrop.databinding.ActivityMainBinding inflate(android.view.LayoutInflater)>
+		19. <com.fmsys.snapdrop.databinding.ActivityMainBinding: androidx.swiperefreshlayout.widget.SwipeRefreshLayout getRoot()>
+		20. <android.app.Activity: android.view.LayoutInflater getLayoutInflater()>
+		21. <com.fmsys.snapdrop.SnapdropApplication: void setAppTheme(android.content.Context)>
+		22. <androidx.webkit.WebViewFeature: boolean isFeatureSupported(java.lang.String)>
+		23. <com.fmsys.snapdrop.MainActivity: android.content.Intent getIntent()>
+		24. <androidx.preference.PreferenceManager: android.content.SharedPreferences getDefaultSharedPreferences(android.content.Context)>
+		25. <androidx.appcompat.app.AppCompatActivity: void setContentView(android.view.View)>
+		26. <com.fmsys.snapdrop.MainActivity: void onNewIntent(android.content.Intent)>
+		27. <android.app.Activity: void setTitle(int)>
+	- **Edges(Calling relationship between reachable methods)**:
+		<0, 1>
+		<0, 2>
+		<0, 3>
+		<0, 4>
+		<0, 5>
+		<0, 6>
+		<0, 7>
+		<0, 8>
+		<0, 9>
+		<0, 10>
+		<0, 11>
+		<0, 12>
+		<0, 13>
+		<0, 14>
+		<0, 15>
+		<0, 16>
+		<0, 17>
+		<0, 18>
+		<0, 19>
+		<0, 20>
+		<0, 21>
+		<0, 22>
+		<0, 23>
+		<0, 24>
+		<0, 25>
+		<0, 26>
+		<0, 27>

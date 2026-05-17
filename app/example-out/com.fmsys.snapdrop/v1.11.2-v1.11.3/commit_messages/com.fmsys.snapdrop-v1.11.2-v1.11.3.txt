@@ -1,0 +1,2 @@
+New Bugfix Release - v1.11.3
+fix custom js code not being executed

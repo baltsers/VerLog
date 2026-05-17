@@ -1,0 +1,23 @@
+**App Description**: Transfer files seamlessly between all your devices - Snapdrop.
+**Entry Method Signature**: + <com.fmsys.snapdrop.MainActivity$MyWebChromeClient: boolean onConsoleMessage(android.webkit.ConsoleMessage)>
+**Method Line Number(start,end)**: (484, 494)
+**Commit Messages between two versions**:
+	1. New Bugfix Release - v1.11.3
+	2. fix custom js code not being executed
+**Partial call graph**:
+	- **Nodes(Reachable methods(and their changes) from entry method)**:
+
+		0. + <com.fmsys.snapdrop.MainActivity$MyWebChromeClient: boolean onConsoleMessage(android.webkit.ConsoleMessage)>
+			Changed code in this method:
+				@@ -480,22 +481,35 @@ 
+				+        public boolean onConsoleMessage(final ConsoleMessage consoleMessage) {
+				+            if (consoleMessage.messageLevel().equals(ConsoleMessage.MessageLevel.ERROR)) {
+				+                Log.e("WebViewConsole", consoleMessage.message());
+				+            } else if (consoleMessage.messageLevel().equals(ConsoleMessage.MessageLevel.WARNING)) {
+				+                Log.w("WebViewConsole", consoleMessage.message());
+				+            } else {
+				+                Log.d("WebViewConsole", consoleMessage.message());
+				+            }
+				+            return true;
+				+        }
+				     }

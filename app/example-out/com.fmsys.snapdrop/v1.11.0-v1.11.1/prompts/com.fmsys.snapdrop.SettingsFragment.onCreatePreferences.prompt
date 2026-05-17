@@ -1,0 +1,30 @@
+**App Description**: Transfer files seamlessly between all your devices - Snapdrop.
+**Entry Method Signature**: <com.fmsys.snapdrop.SettingsFragment: void onCreatePreferences(android.os.Bundle,java.lang.String)>
+**Method Line Number(start,end)**: (40, 158)
+**Commit Messages between two versions**:
+	1. make links clickable in attribution section
+	2. add Material Design 3 for the app icon
+	3. Update translation_validation.yaml
+	4. New Crowdin updates (#216)
+	5. Update README.md
+	6. some cleanup
+	7. New Bugfix Release - v1.11.1
+**Partial call graph**:
+	- **Nodes(Reachable methods(and their changes) from entry method)**:
+
+		0. <com.fmsys.snapdrop.SettingsFragment: void onCreatePreferences(android.os.Bundle,java.lang.String)>
+			Changed code in this method:
+				@@ -58,11 +59,12 @@ 
+				 
+				         final Preference openSourceComponents = findPreference(getString(R.string.pref_components));
+				         openSourceComponents.setOnPreferenceClickListener(pref -> {
+				-            new AlertDialog.Builder(getContext())
+				+            final AlertDialog dialog = new AlertDialog.Builder(getContext())
+				                     .setTitle(R.string.components)
+				                     .setMessage(R.string.components_long_text)
+				                     .setPositiveButton(android.R.string.ok, null)
+				                     .show();
+				+            ((TextView) dialog.findViewById(android.R.id.message)).setMovementMethod(LinkMovementMethod.getInstance());
+				             return true;
+				         });
+				 

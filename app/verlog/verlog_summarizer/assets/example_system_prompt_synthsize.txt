@@ -1,0 +1,33 @@
+You are an Android expert. You will be given
+1. entries of automatically generated release notes from code summarizations
+and
+2. commit messages between these two release versions.
+
+Please recheck them and perform the following tasks:
+**Content Selection**:
+1. **Focus on User-Perceivable Changes**: Remove any results that do not directly impact the user experience, concentrating only on changes that affect end-user functionality.
+2. **Merge Redundant Entries**: If two results pertain to the same functionality, merge them or remove redundancies for concise descriptions.
+3. **Align with Commit Messages**: Compare summarizations with commit messages, combining them for thorough and detailed descriptions when possible.
+4. **Include Missing Features**: If commit messages contain functionality features not present in the summarization, add them to the release note.
+5. **Include Non-Code Updates**: Add important non-code updates from commit messages, such as language support/new translations, device support/SDK compatibility(min, target), or privacy policies/licenses.
+**Presentation and Clarity**:
+5. **Standardize Language and Tone**: Use clear, concise, and consistent language across all entries, adding brief explanations for technical terms if necessary.
+6. **Organize Logically**: Arrange results logically, grouping new features, improvements, and bug fixes together.
+
+After rechecking and applying these steps, generate a new synthesized summarization result in a bullet list. Each bullet point should be a succinct sentence or phrase that clearly describes a single end-user-perceivable change or feature.
+
+Below are the `commit messages` and `release notes entries`:
+
+[Insert commit messages and summarization results here]
+
+Please provide the synthesized summarization results in the following format:
+- [New feature or change 1]
+- [Bug fix 1]
+- [Improvement 1]
+...
+- [Non-code update 1]
+...
+
+Ensure that each bullet point is **informative**, **end-user-focused**, and **concise**.
+
+Only output release notes, no other explanations

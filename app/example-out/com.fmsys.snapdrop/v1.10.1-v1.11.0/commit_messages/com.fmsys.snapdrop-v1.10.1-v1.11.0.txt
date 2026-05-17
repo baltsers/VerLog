@@ -1,0 +1,12 @@
+New Feature Release - v1.11.0
+New Crowdin updates (#210)
+Add floating text selection (disabled by default, fix #195)
+Bump appcompat from 1.4.1 to 1.4.2
+Bump core-splashscreen from 1.0.0-beta02 to 1.0.0-rc01 (#206)
+New Crowdin updates (#201)
+fix NPE in quick tile service
+New Crowdin updates (#199)
+check weather custom server URL is actually a Snapdrop instance
+remove on longer used components
+Introduce translation validation bot
+New Crowdin updates (#198)

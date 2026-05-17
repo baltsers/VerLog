@@ -1,0 +1,55 @@
+**App Description**: Transfer files seamlessly between all your devices - Snapdrop.
+**Entry Method Signature**: <com.fmsys.snapdrop.MainActivity$CustomWebViewClient: void onPageStarted(android.webkit.WebView,java.lang.String,android.graphics.Bitmap)>
+**Method Line Number(start,end)**: (542, 563)
+**Commit Messages between two versions**:
+	1. make links clickable in attribution section
+	2. add Material Design 3 for the app icon
+	3. Update translation_validation.yaml
+	4. New Crowdin updates (#216)
+	5. Update README.md
+	6. some cleanup
+	7. New Bugfix Release - v1.11.1
+**Partial call graph**:
+	- **Nodes(Reachable methods(and their changes) from entry method)**:
+
+		0. <com.fmsys.snapdrop.MainActivity$CustomWebViewClient: void onPageStarted(android.webkit.WebView,java.lang.String,android.graphics.Bitmap)>
+			Changed code in this method:
+				@@ -537,7 +521,6 @@ 
+				         public void onPageStarted(final WebView view, final String url, final Bitmap favicon) {
+				@@ -545,12 +528,12 @@ 
+				 
+				             final Handler handler = new Handler();
+				             final int delay = 500; // milliseconds
+				-            currentlyLoading = true;
+				+            state.setCurrentlyLoading(true);
+				 
+				             handler.postDelayed(new Runnable() {
+				                 public void run() {
+				                     //do something
+				-                    if (currentlyLoading) {
+				+                    if (state.isCurrentlyLoading()) {
+				                         if (NetworkUtils.isInternetAvailable()) {
+				                             handler.postDelayed(this, delay);
+				                         } else {
+		1. + <com.fmsys.snapdrop.MainActivity: com.fmsys.snapdrop.utils.StateHandler access$000(com.fmsys.snapdrop.MainActivity)>
+		2. <com.fmsys.snapdrop.MainActivity$CustomWebViewClient$1: void run()>
+		3. <android.webkit.WebViewClient: void onPageStarted(android.webkit.WebView,java.lang.String,android.graphics.Bitmap)>
+		4. - <com.fmsys.snapdrop.MainActivity: boolean access$502(com.fmsys.snapdrop.MainActivity,boolean)>
+		5. <android.os.Handler: boolean postDelayed(java.lang.Runnable,long)>
+		6. + + + + <com.fmsys.snapdrop.utils.StateHandler: void setCurrentlyLoading(boolean)>
+			Changed code in this method:
+				@@ -0,0 +1,31 @@ 
+				+    public void setCurrentlyLoading(final boolean currentlyLoading) {
+				+        this.currentlyLoading = currentlyLoading;
+				+
+				+        if (!currentlyLoading) {
+				+            currentlyStarting = false;
+				+        }
+				+    }
+	- **Edges(Calling relationship between reachable methods)**:
+		+ <0, 1>
+		<0, 2>
+		<0, 3>
+		- <0, 4>
+		<0, 5>
+		+ <0, 6>

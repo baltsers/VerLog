@@ -1,0 +1,32 @@
+**App Description**: Transfer files seamlessly between all your devices - Snapdrop.
+**Entry Method Signature**: + <com.fmsys.snapdrop.FloatingTextActivity: void onCreate(android.os.Bundle)>
+**Method Line Number(start,end)**: (10, 19)
+**Commit Messages between two versions**:
+	1. New Crowdin updates (#198)
+	2. New Feature Release - v1.11.0
+	3. Bump core-splashscreen from 1.0.0-beta02 to 1.0.0-rc01 (#206)
+	4. New Crowdin updates (#201)
+	5. check weather custom server URL is actually a Snapdrop instance
+	6. Introduce translation validation bot
+	7. Bump appcompat from 1.4.1 to 1.4.2
+	8. New Crowdin updates (#199)
+	9. fix NPE in quick tile service
+	10. Add floating text selection (disabled by default, fix #195)
+	11. New Crowdin updates (#210)
+	12. remove on longer used components
+**Partial call graph**:
+	- **Nodes(Reachable methods(and their changes) from entry method)**:
+
+		0. + <com.fmsys.snapdrop.FloatingTextActivity: void onCreate(android.os.Bundle)>
+			Changed code in this method:
+				@@ -0,0 +1,20 @@ 
+				+    protected void onCreate(final Bundle savedInstanceState) {
+				+        super.onCreate(savedInstanceState);
+				+        final Intent intent = getIntent().setClass(this, MainActivity.class);
+				+        if (!isTaskRoot()) {
+				+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+				+        }
+				+        startActivity(intent);
+				+        finish();
+				+    }
+				+}

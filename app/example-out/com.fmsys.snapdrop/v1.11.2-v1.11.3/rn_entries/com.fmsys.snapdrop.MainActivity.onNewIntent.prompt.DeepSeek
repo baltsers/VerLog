@@ -1,0 +1,1 @@
+Fixed an issue where custom JavaScript code was not being executed when sharing content to the app.

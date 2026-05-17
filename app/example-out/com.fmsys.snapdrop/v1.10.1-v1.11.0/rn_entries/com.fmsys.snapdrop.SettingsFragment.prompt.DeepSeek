@@ -1,0 +1,4 @@
+
+"Added floating text selection feature, disabled by default, for better text handling.",
+"Improved custom server URL validation to ensure it's a valid Snapdrop instance.",
+"Fixed potential issues with preference value trimming in settings."

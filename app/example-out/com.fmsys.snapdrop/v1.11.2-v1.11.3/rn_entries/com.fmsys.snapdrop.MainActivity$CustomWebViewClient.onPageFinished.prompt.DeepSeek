@@ -1,0 +1,1 @@
+Fixed an issue where custom JavaScript code was not being executed properly during file transfers.

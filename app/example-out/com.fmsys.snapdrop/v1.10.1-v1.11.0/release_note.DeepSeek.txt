@@ -1,0 +1,9 @@
+Here is the synthesized release note:
+
+- Added floating text selection feature (disabled by default) for better text handling and sharing  
+- Improved custom server URL validation to ensure it connects to a valid Snapdrop instance  
+- Fixed a crash issue in the quick tile service  
+- Updated translations for multiple languages  
+- Updated core libraries for improved stability and compatibility  
+
+The release note focuses on user-perceivable changes, merges redundant entries (floating text selection), and includes non-code updates (translations and library updates). Technical or internal changes (e.g., translation validation bot, deprecated components) are omitted as they don’t directly impact the end user.

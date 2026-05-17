@@ -1,0 +1,59 @@
+**App Description**: Transfer files seamlessly between all your devices - Snapdrop.
+**Entry Method Signature**: <com.fmsys.snapdrop.MainActivity$CustomWebViewClient: void onReceivedError(android.webkit.WebView,android.webkit.WebResourceRequest,android.webkit.WebResourceError)>
+**Method Line Number(start,end)**: (565, 577)
+**Commit Messages between two versions**:
+	1. make links clickable in attribution section
+	2. add Material Design 3 for the app icon
+	3. Update translation_validation.yaml
+	4. New Crowdin updates (#216)
+	5. Update README.md
+	6. some cleanup
+	7. New Bugfix Release - v1.11.1
+**Partial call graph**:
+	- **Nodes(Reachable methods(and their changes) from entry method)**:
+
+		0. <com.fmsys.snapdrop.MainActivity$CustomWebViewClient: void onReceivedError(android.webkit.WebView,android.webkit.WebResourceRequest,android.webkit.WebResourceError)>
+			Changed code in this method:
+				@@ -565,15 +548,19 @@ 
+				         public void onReceivedError(final WebView view, final WebResourceRequest request, final WebResourceError error) {
+				-            if (error.getErrorCode() == -6) {
+				+
+				+            state.setCurrentlyLoading(false);
+				+
+				+            Log.e("WebViewError", "Error on accessing " + request.getUrl() + ", " + error.getDescription() + " (ErrorCode " + error.getErrorCode() + ")");
+				+            showScreenNoConnection();
+				+
+				+            if (error.getErrorCode() == ERROR_CONNECT || error.getErrorCode() == ERROR_TIMEOUT) {
+				                 new AlertDialog.Builder(MainActivity.this)
+				                         .setTitle(R.string.error_not_reachable_title)
+				                         .setMessage(R.string.error_not_reachable)
+				                         .setPositiveButton(android.R.string.ok, null)
+				                         .show();
+				             }
+				-            Log.e("WebViewError", "Cannot reach " + request.getUrl() + " (ErrorCode " + error.getErrorCode() + ")");
+				-            showScreenNoConnection();
+				         }
+				     }
+				 
+		1. + <com.fmsys.snapdrop.MainActivity: com.fmsys.snapdrop.utils.StateHandler access$000(com.fmsys.snapdrop.MainActivity)>
+		2. - <com.fmsys.snapdrop.MainActivity: void access$800(com.fmsys.snapdrop.MainActivity)>
+		3. + <com.fmsys.snapdrop.MainActivity: void access$700(com.fmsys.snapdrop.MainActivity)>
+		4. + + + + <com.fmsys.snapdrop.utils.StateHandler: void setCurrentlyLoading(boolean)>
+			Changed code in this method:
+				@@ -0,0 +1,31 @@ 
+				+    public void setCurrentlyLoading(final boolean currentlyLoading) {
+				+        this.currentlyLoading = currentlyLoading;
+				+
+				+        if (!currentlyLoading) {
+				+            currentlyStarting = false;
+				+        }
+				+    }
+		5. <androidx.appcompat.app.AlertDialog$Builder: androidx.appcompat.app.AlertDialog$Builder setTitle(int)>
+		6. <android.util.Log: int e(java.lang.String,java.lang.String)>
+	- **Edges(Calling relationship between reachable methods)**:
+		+ <0, 1>
+		- <0, 2>
+		+ <0, 3>
+		+ <0, 4>
+		<0, 5>
+		<0, 6>

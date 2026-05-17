@@ -1,0 +1,63 @@
+**App Description**: Transfer files seamlessly between all your devices - Snapdrop.
+**Entry Method Signature**: <com.fmsys.snapdrop.MainActivity: void refreshWebsite(boolean)>
+**Method Line Number(start,end)**: (254, 265)
+**Commit Messages between two versions**:
+	1. make links clickable in attribution section
+	2. add Material Design 3 for the app icon
+	3. Update translation_validation.yaml
+	4. New Crowdin updates (#216)
+	5. Update README.md
+	6. some cleanup
+	7. New Bugfix Release - v1.11.1
+**Partial call graph**:
+	- **Nodes(Reachable methods(and their changes) from entry method)**:
+
+		0. <com.fmsys.snapdrop.MainActivity: void refreshWebsite(boolean)>
+			Changed code in this method:
+				@@ -243,12 +242,11 @@ 
+				     private void refreshWebsite(final boolean pulled) {
+				@@ -260,6 +258,7 @@ 
+				             binding.pullToRefresh.setRefreshing(false);
+				             forceRefresh = pulled; //reset forceRefresh if after pullToRefresh the refresh request did come from another source eg onResume, so pullToRefresh doesn't unexpectedly force refreshes by "first time"
+				         } else {
+				+            state.setCurrentlyLoading(false);
+				             showScreenNoConnection();
+				         }
+				     }
+		1. <android.util.Log: int w(java.lang.String,java.lang.String)>
+		2. <com.fmsys.snapdrop.utils.NetworkUtils: boolean isWifiAvailable()>
+		3. <com.fmsys.snapdrop.MainActivity: void showScreenNoConnection()>
+			Changed code in this method:
+				@@ -269,9 +268,8 @@ 
+				     private void showScreenNoConnection() {
+				+        state.setCurrentlyOffline(true);
+				         binding.webview.loadUrl("file:///android_asset/offline.html?text=" + getString(R.string.error_network) + "&button=" + getString(R.string.ignore_error_network));
+				-        currentlyOffline = true;
+				-        currentlyLoading = false;
+				     }
+		4. <com.fmsys.snapdrop.ObservableProperty: java.lang.Object get()>
+		5. + + + + <com.fmsys.snapdrop.utils.StateHandler: void setCurrentlyLoading(boolean)>
+			Changed code in this method:
+				@@ -0,0 +1,31 @@ 
+				+    public void setCurrentlyLoading(final boolean currentlyLoading) {
+				+        this.currentlyLoading = currentlyLoading;
+				+
+				+        if (!currentlyLoading) {
+				+            currentlyStarting = false;
+				+        }
+				+    }
+		6. + + <com.fmsys.snapdrop.utils.StateHandler: void setCurrentlyOffline(boolean)>
+			Changed code in this method:
+				@@ -0,0 +1,31 @@ 
+				+    public void setCurrentlyOffline(final boolean currentlyOffline) {
+				+        this.currentlyOffline = currentlyOffline;
+				+    }
+		7. <android.content.Context: java.lang.String getString(int)>
+	- **Edges(Calling relationship between reachable methods)**:
+		<0, 1>
+		<0, 2>
+		<0, 3>
+		<0, 4>
+		+ <0, 5>
+		+ <3, 6>
+		<3, 7>

@@ -1,0 +1,1 @@
+Fixed a potential crash issue in the quick tile service when starting to listen.

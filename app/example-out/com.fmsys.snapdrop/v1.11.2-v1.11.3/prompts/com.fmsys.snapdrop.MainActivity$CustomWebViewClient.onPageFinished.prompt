@@ -1,0 +1,102 @@
+**App Description**: Transfer files seamlessly between all your devices - Snapdrop.
+**Entry Method Signature**: <com.fmsys.snapdrop.MainActivity$CustomWebViewClient: void onPageFinished(android.webkit.WebView,java.lang.String)>
+**Method Line Number(start,end)**: (487, 500)
+**Commit Messages between two versions**:
+	1. New Bugfix Release - v1.11.3
+	2. fix custom js code not being executed
+**Partial call graph**:
+	- **Nodes(Reachable methods(and their changes) from entry method)**:
+
+		0. <com.fmsys.snapdrop.MainActivity$CustomWebViewClient: void onPageFinished(android.webkit.WebView,java.lang.String)>
+			Changed code in this method:
+				@@ -480,22 +481,35 @@ 
+				         public void onPageFinished(final WebView view, final String url) {
+				-            Log.w("SnapdropAndroid", "refresh finished");
+				 
+				             state.setCurrentlyLoading(false);
+				             binding.pullToRefresh.setRefreshing(false);
+				 
+				             if (url.startsWith(baseURL)) {
+				+                Log.w("WebView", "refresh finished, init snapdrop...");
+				                 state.setCurrentlyOffline(false);
+				                 initSnapdrop();
+				-
+				+            } else {
+				+                Log.w("WebView", "finished loading " + url);
+				             }
+				+
+				             super.onPageFinished(view, url);
+				         }
+				 
+		1. <com.fmsys.snapdrop.utils.StateHandler: void setCurrentlyOffline(boolean)>
+		2. <com.fmsys.snapdrop.MainActivity: java.lang.String access$500(com.fmsys.snapdrop.MainActivity)>
+		3. <android.webkit.WebViewClient: void onPageFinished(android.webkit.WebView,java.lang.String)>
+		4. <com.fmsys.snapdrop.utils.StateHandler: void setCurrentlyLoading(boolean)>
+		5. <com.fmsys.snapdrop.MainActivity: com.fmsys.snapdrop.utils.StateHandler access$000(com.fmsys.snapdrop.MainActivity)>
+		6. <com.fmsys.snapdrop.MainActivity$CustomWebViewClient: void initSnapdrop()>
+			Changed code in this method:
+				@@ -480,22 +481,35 @@ 
+				@@ -504,9 +518,12 @@ 
+				                 return; // too late to do anything at this point in time...
+				             }
+				             //website initialisation
+				-            binding.webview.loadUrl(JavaScriptInterface.getAssetsJS(MainActivity.this, "init.js"));
+				-            binding.webview.loadUrl(JavaScriptInterface.getSendTextDialogWithPreInsertedString(getTextFromUploadIntent()));
+				+            Log.w("WebView", "load init script...");
+				+            binding.webview.evaluateJavascript(JavaScriptInterface.getAssetsJS(MainActivity.this, "init.js"), null);
+				+            binding.webview.evaluateJavascript(JavaScriptInterface.getSendTextDialogWithPreInsertedString(getTextFromUploadIntent()), null);
+				             WebsiteLocalizer.localize(binding.webview);
+				+            Log.w("WebView", "init end.");
+				+
+				 
+				             // welcome dialog
+				             if (prefs.getBoolean(getString(R.string.pref_first_use), true)) {
+		7. <android.util.Log: int w(java.lang.String,java.lang.String)>
+		8. <com.fmsys.snapdrop.MainActivity: com.fmsys.snapdrop.databinding.ActivityMainBinding access$400(com.fmsys.snapdrop.MainActivity)>
+		9. <com.fmsys.snapdrop.WebsiteLocalizer: void localize(android.webkit.WebView)>
+			Changed code in this method:
+				@@ -43,7 +43,7 @@ 
+				     public static void localize(final WebView webView) {
+				         for (TranslationElement element : TranslationElement.values()) {
+				-            webView.loadUrl(getTranslationJS(element, webView.getContext()));
+				+            webView.evaluateJavascript(getTranslationJS(element, webView.getContext()), null);
+				         }
+				     }
+		10. <androidx.appcompat.app.AlertDialog$Builder: androidx.appcompat.app.AlertDialog$Builder setCancelable(boolean)>
+		11. <androidx.appcompat.app.AlertDialog$Builder: androidx.appcompat.app.AlertDialog create()>
+		12. <com.fmsys.snapdrop.JavaScriptInterface: java.lang.String getSendTextDialogWithPreInsertedString(java.lang.String)>
+		13. <androidx.appcompat.app.AlertDialog$Builder: androidx.appcompat.app.AlertDialog$Builder setTitle(int)>
+		14. <androidx.appcompat.app.AlertDialog$Builder: androidx.appcompat.app.AlertDialog$Builder setMessage(int)>
+		15. <android.content.Context: java.lang.String getString(int)>
+		16. <android.app.Activity: boolean isFinishing()>
+		17. <androidx.appcompat.app.AlertDialog$Builder: androidx.appcompat.app.AlertDialog$Builder setPositiveButton(int,android.content.DialogInterface$OnClickListener)>
+		18. <com.fmsys.snapdrop.JavaScriptInterface: java.lang.String getAssetsJS(android.content.Context,java.lang.String)>
+		19. <com.fmsys.snapdrop.MainActivity: java.lang.String access$600(com.fmsys.snapdrop.MainActivity)>
+		20. + <android.util.Log: int w(java.lang.String,java.lang.String)>
+		21. <com.fmsys.snapdrop.MainActivity: com.fmsys.snapdrop.databinding.ActivityMainBinding access$400(com.fmsys.snapdrop.MainActivity)>
+		22. <com.fmsys.snapdrop.WebsiteLocalizer: java.lang.String getTranslationJS(com.fmsys.snapdrop.WebsiteLocalizer$TranslationElement,android.content.Context)>
+		23. <com.fmsys.snapdrop.WebsiteLocalizer$TranslationElement: com.fmsys.snapdrop.WebsiteLocalizer$TranslationElement[] values()>
+	- **Edges(Calling relationship between reachable methods)**:
+		<0, 1>
+		<0, 2>
+		<0, 3>
+		<0, 4>
+		<0, 5>
+		<0, 6>
+		<0, 7>
+		<0, 8>
+		<6, 9>
+		<6, 10>
+		<6, 11>
+		<6, 12>
+		<6, 13>
+		<6, 14>
+		<6, 15>
+		<6, 16>
+		<6, 17>
+		<6, 18>
+		<6, 19>
+		+ <6, 20>
+		<6, 21>
+		<9, 22>
+		<9, 23>

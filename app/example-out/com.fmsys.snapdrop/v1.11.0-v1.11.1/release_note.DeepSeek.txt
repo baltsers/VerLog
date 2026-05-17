@@ -1,0 +1,9 @@
+Here’s the synthesized and refined release notes list based on the provided commit messages and generated entries:
+
+- Updated the app icon with Material Design 3 styling.  
+- Made links clickable in the attribution section (About page and Settings).  
+- Improved handling of offline and loading states for smoother browsing.  
+- Enhanced error handling and connection status display when server connection fails.  
+- Added new translations (language support updates).  
+
+(Removed redundant or non-user-facing entries like "cleanup" and README updates.)

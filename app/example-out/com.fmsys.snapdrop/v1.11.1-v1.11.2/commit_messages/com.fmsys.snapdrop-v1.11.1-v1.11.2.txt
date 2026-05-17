@@ -1,0 +1,4 @@
+New Bugfix Release - v1.11.2
+force https for snapdrop.net
+New Crowdin updates (#232)
+new twitter links

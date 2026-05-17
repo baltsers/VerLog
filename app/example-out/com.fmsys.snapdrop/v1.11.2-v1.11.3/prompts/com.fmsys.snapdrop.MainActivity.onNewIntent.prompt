@@ -1,0 +1,37 @@
+**App Description**: Transfer files seamlessly between all your devices - Snapdrop.
+**Entry Method Signature**: <com.fmsys.snapdrop.MainActivity: void onNewIntent(android.content.Intent)>
+**Method Line Number(start,end)**: (279, 307)
+**Commit Messages between two versions**:
+	1. New Bugfix Release - v1.11.3
+	2. fix custom js code not being executed
+**Partial call graph**:
+	- **Nodes(Reachable methods(and their changes) from entry method)**:
+
+		0. <com.fmsys.snapdrop.MainActivity: void onNewIntent(android.content.Intent)>
+			Changed code in this method:
+				@@ -284,7 +285,7 @@ 
+				             binding.webview.clearFocus(); // remove potential text selections
+				 
+				             final String clipText = getTextFromUploadIntent();
+				-            binding.webview.loadUrl(JavaScriptInterface.getSendTextDialogWithPreInsertedString(clipText));
+				+            binding.webview.evaluateJavascript(JavaScriptInterface.getSendTextDialogWithPreInsertedString(clipText), null);
+				 
+				             final Snackbar snackbar = Snackbar
+				                     .make(binding.pullToRefresh, clipText.isEmpty() ? (Intent.ACTION_SEND_MULTIPLE.equals(intent.getAction()) ? R.string.intent_files : R.string.intent_file) : R.string.intent_content, Snackbar.LENGTH_INDEFINITE)
+		1. <com.google.android.material.snackbar.Snackbar: com.google.android.material.snackbar.Snackbar setAction(int,android.view.View$OnClickListener)>
+		2. <com.fmsys.snapdrop.MainActivity: android.net.Uri[] getUploadFromIntentUris(android.content.Intent)>
+		3. <androidx.fragment.app.FragmentActivity: void onNewIntent(android.content.Intent)>
+		4. <com.fmsys.snapdrop.MainActivity: android.content.Intent getIntent()>
+		5. <com.fmsys.snapdrop.JavaScriptInterface: java.lang.String getSendTextDialogWithPreInsertedString(java.lang.String)>
+		6. <com.google.android.material.snackbar.Snackbar: void show()>
+		7. <com.fmsys.snapdrop.MainActivity: java.lang.String getTextFromUploadIntent()>
+		8. <com.google.android.material.snackbar.Snackbar: com.google.android.material.snackbar.Snackbar make(android.view.View,int,int)>
+	- **Edges(Calling relationship between reachable methods)**:
+		<0, 1>
+		<0, 2>
+		<0, 3>
+		<0, 4>
+		<0, 5>
+		<0, 6>
+		<0, 7>
+		<0, 8>

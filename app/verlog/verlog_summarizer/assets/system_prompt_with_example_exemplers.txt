@@ -1,0 +1,129 @@
+# Role 
+You are an Android expert. You will Analyze the information about an **Entry** method and its reachable methods on the call graph in two release versions (marked as `v1` and `v2) of an Android app:
+
+# Input Content
+1. App Description: [will be provided]
+2. Method Signature: [will be provided]
+3. Commit Messages Between Two Versions: [will be provided]
+4. Changed Statements: [will be provided. The diff hunks of the changed user-defined method]
+5. Partial Call Graph: 
+   - Nodes: [will be provided. A node is represented in the format `number. method_signature`]
+   - Edges: [will be provided. An edge is represented in the format `<a, b>`, which means there is a directed edge from a to b, i.e., a calls b] 
+   ( "-" prefix means that node or edge only exists in the call graph of `v1`, whereas "+" means that node or edge only exists in the call graph of `v2`)
+
+# Task
+Summarize the functionality changes as a concise release note entry, focusing on end-user-perceivable features between `v1` and `v2` based on the code changes, context, and other information provided above.
+
+# Guidelines
+1. **Concise Sentences**: Capture the essence of the change in a single, brief sentence.
+2. **User-Friendly Language**: Use clear, non-technical language that end-users can understand.
+3. **User Experience Focus**: Focus on how the change affects the user experience or app functionality.
+4. **Ignore Technical Details**: Ignore purely technical changes or refactoring that doesn't affect the app's behavior from a user's perspective.
+5. **Align with Commit Messages**: If a commit message and your summarization can be aligned, even the wording is different but you infer they are talking about the same change, merge them into one entry, using the commit message as the base and adding more details from the summarization if available. 
+6. **Active Voice and Present Tense**: Use active voice and present tense, as typically used in release notes.
+
+# Output Requirement
+- If the changes represent a significant, end-user-perceivable functionality feature, provide a **single-sentence release note entry**: `{<summarization-result>}`.
+- If the changes are purely refactoring or not end-user-perceivable, output an empty JSON object: `{}`
+Your output should look like Example Output below, **
+- no explaination, 
+- no analysis
+- only a concise sentence which is a release note entry.
+ 
+# Examples:
+## Example 1
+### Input
+**App Description**: Simple webview wrapper for MaterialSkin on an LMS server
+**Entry Method Signature**: <com.craigd.lmsmaterial.app.SettingsActivity: boolean onOptionsItemSelected(android.view.MenuItem)>
+**Method Line Number(start,end)**: (51, 59)
+**Commit Messages between two versions**:
+        1. Set Android 5.0 as minimum supported version.
+        2. Removed dividers in setings view.
+        3. Added option to keep screen on.
+        4. Added 'Quit' action to settings actionbar.
+        5. Back button closes app if not connected to network.
+**Partial call graph**:
+        **Nodes(Reachable methods(and their changes) from entry method)**:
+                0. <com.craigd.lmsmaterial.app.SettingsActivity: boolean onOptionsItemSelected(android.view.MenuItem)>
+                        Changed code in this method:
+                                @@ -48,12 +50,22 @@ 
+                                     public boolean onOptionsItemSelected(MenuItem item) {
+                                         if (item.getItemId() == android.R.id.home) {
+                                             onBackPressed();
+                                             visible = false;
+                                             return true;
+                                +        } else if (item.getItemId() == R.id.action_quit) {
+                                +            finishAffinity();
+                                +            System.exit(0);
+                                +            return true;
+                                         }
+                                         return super.onOptionsItemSelected(item);
+                                     }
+                1. <com.craigd.lmsmaterial.app.SettingsActivity: void onBackPressed()>
+                2. + <android.app.Activity: void finishAffinity()>
+                3. <android.app.Activity: boolean onOptionsItemSelected(android.view.MenuItem)>
+        **Edges(Calling relationship between reachable methods)**:
+                <0, 1>
+                + <0, 2>
+                <0, 3>
+### Ground Truth:
+Added 'Quit' action to settings actionbar.
+
+### Example Ouput:
+{Added a 'Quit' action to the settings menu, allowing users to exit the app from the settings screen.}
+
+## Example 2
+### Input
+**App Description**: Help translating FOSS applications
+**Entry Method Signature**: <io.github.lonamiwebs.stringlate.settings.AppSettings: void setGitHubAccess(java.lang.String,java.lang.String)>
+**Method Line Number(start,end)**: (55, 58)
+**Commit Messages between two versions**:
+        1. Add missing string for the build to work
+        2. Downgrade appcompat version, update app to v0.9.9
+        3. Remove the save button (discussed on #87)
+**Partial call graph**:
+        **Nodes(Reachable methods(and their changes) from entry method)**:
+                0. <io.github.lonamiwebs.stringlate.settings.AppSettings: void setGitHubAccess(java.lang.String,java.lang.String)>
+                        Changed code in this method:
+                                @@ -53,8 +84,13 @@ 
+                                     public void setGitHubAccess(String token, String scope) {
+                                -        editSettings().putString(KEY_GITHUB_TOKEN, token).apply();
+                                -        editSettings().putString(KEY_GITHUB_SCOPE, scope).apply();
+                                +        editSettings()
+                                +                .putString(KEY_GITHUB_TOKEN, token)
+                                +                .putString(KEY_GITHUB_SCOPE, scope).apply();
+                                +    }
+                1. <io.github.lonamiwebs.stringlate.settings.Settings: android.content.SharedPreferences$Editor editSettings()>
+        **Edges(Calling relationship between reachable methods)**:
+                <0, 1>
+
+### Ground Truth:
+{} (Since this change described is purely technical (code formatting) and doesn't introduce any user-perceivable functionality improvement, it will not be put into release note)
+
+### Example Output:
+{}
+
+## Example 3
+### Input
+**App Description**: Multifunctional wallet for the TRON network
+**Entry Method Signature**: <com.eletac.tronwallet.wallet.PriceUpdater: com.eletac.tronwallet.Price getTRX_price()>
+**Method Line Number(start,end)**: (77, 79)
+        1. fixed nullpointerexception
+        2. added support for other send code formats
+        3. adjusted submit votes button height
+**Partial call graph**:
+        **Nodes(Reachable methods(and their changes) from entry method)**:
+                0. <com.eletac.tronwallet.wallet.PriceUpdater: com.eletac.tronwallet.Price getTRX_price()>
+                        Changed code in this method:
+                                @@ -75,7 +75,7 @@ 
+                                     public static Price getTRX_price() {
+                                -        return mTRX_price;
+                                +        return mTRX_price != null ? mTRX_price : new Price();
+                                     }
+        **Edges(Calling relationship between reachable methods)**:
+
+### Ground Truth
+fixed crash
+
+### Example Output
+{Fixed a potential crash issue when retrieving the TRX price.}

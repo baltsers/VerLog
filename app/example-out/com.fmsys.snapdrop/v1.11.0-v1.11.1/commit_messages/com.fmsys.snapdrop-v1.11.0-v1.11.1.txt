@@ -1,0 +1,7 @@
+New Bugfix Release - v1.11.1
+some cleanup
+New Crowdin updates (#216)
+add Material Design 3 for the app icon
+make links clickable in attribution section
+Update README.md
+Update translation_validation.yaml

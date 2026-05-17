@@ -1,0 +1,62 @@
+**App Description**: Transfer files seamlessly between all your devices - Snapdrop.
+**Entry Method Signature**: <com.fmsys.snapdrop.MainActivity: void onNewIntent(android.content.Intent)>
+**Method Line Number(start,end)**: (281, 307)
+**Commit Messages between two versions**:
+	1. New Crowdin updates (#198)
+	2. New Feature Release - v1.11.0
+	3. Bump core-splashscreen from 1.0.0-beta02 to 1.0.0-rc01 (#206)
+	4. New Crowdin updates (#201)
+	5. check weather custom server URL is actually a Snapdrop instance
+	6. Introduce translation validation bot
+	7. Bump appcompat from 1.4.1 to 1.4.2
+	8. New Crowdin updates (#199)
+	9. fix NPE in quick tile service
+	10. Add floating text selection (disabled by default, fix #195)
+	11. New Crowdin updates (#210)
+	12. remove on longer used components
+**Partial call graph**:
+	- **Nodes(Reachable methods(and their changes) from entry method)**:
+
+		0. <com.fmsys.snapdrop.MainActivity: void onNewIntent(android.content.Intent)>
+			Changed code in this method:
+				@@ -280,9 +280,11 @@ 
+				     protected void onNewIntent(final Intent intent) {
+				-        if ((Intent.ACTION_SEND.equals(intent.getAction()) || Intent.ACTION_SEND_MULTIPLE.equals(intent.getAction())) && intent.getType() != null) {
+				+        if ((Intent.ACTION_SEND.equals(intent.getAction()) || Intent.ACTION_SEND_MULTIPLE.equals(intent.getAction()) || Intent.ACTION_PROCESS_TEXT.equals(intent.getAction())) && intent.getType() != null) {
+				             uploadIntent = intent;
+				 
+				+            binding.webview.clearFocus(); // remove potential text selections
+				+
+				             final String clipText = getTextFromUploadIntent();
+				             binding.webview.loadUrl(JavaScriptInterface.getSendTextDialogWithPreInsertedString(clipText));
+				 
+		1. <com.google.android.material.snackbar.Snackbar: com.google.android.material.snackbar.Snackbar setAction(int,android.view.View$OnClickListener)>
+		2. <com.fmsys.snapdrop.MainActivity: android.net.Uri[] getUploadFromIntentUris(android.content.Intent)>
+		3. <com.google.android.material.snackbar.Snackbar: void show()>
+		4. <com.fmsys.snapdrop.MainActivity: java.lang.String getTextFromUploadIntent()>
+			Changed code in this method:
+				@@ -422,6 +424,11 @@ 
+				     private String getTextFromUploadIntent() {
+				         final StringBuilder result = new StringBuilder();
+				         if (uploadIntent != null) {
+				+
+				+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M && uploadIntent.hasExtra(Intent.EXTRA_PROCESS_TEXT)) {
+				+                result.append(uploadIntent.getCharSequenceExtra(Intent.EXTRA_PROCESS_TEXT));
+				+            }
+				+
+				             final ClipData clip = uploadIntent.getClipData();
+				             if (clip != null && clip.getItemCount() > 0) {
+				                 for (int i = 0; i < clip.getItemCount(); i++) {
+		5. <com.google.android.material.snackbar.Snackbar: com.google.android.material.snackbar.Snackbar make(android.view.View,int,int)>
+		6. <com.fmsys.snapdrop.MainActivity: android.content.Intent getIntent()>
+		7. <androidx.fragment.app.FragmentActivity: void onNewIntent(android.content.Intent)>
+		8. <com.fmsys.snapdrop.JavaScriptInterface: java.lang.String getSendTextDialogWithPreInsertedString(java.lang.String)>
+	- **Edges(Calling relationship between reachable methods)**:
+		<0, 1>
+		<0, 2>
+		<0, 3>
+		<0, 4>
+		<0, 5>
+		<0, 6>
+		<0, 7>
+		<0, 8>

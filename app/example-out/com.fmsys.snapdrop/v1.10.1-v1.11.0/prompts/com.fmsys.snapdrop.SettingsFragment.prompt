@@ -1,0 +1,89 @@
+**App Description**: Transfer files seamlessly between all your devices - Snapdrop.
+**Package/Class**: com.fmsys.snapdrop.SettingsFragment
+**Commit Messages between two versions**:
+	1. New Crowdin updates (#198)
+	2. New Feature Release - v1.11.0
+	3. Bump core-splashscreen from 1.0.0-beta02 to 1.0.0-rc01 (#206)
+	4. New Crowdin updates (#201)
+	5. check weather custom server URL is actually a Snapdrop instance
+	6. Introduce translation validation bot
+	7. Bump appcompat from 1.4.1 to 1.4.2
+	8. New Crowdin updates (#199)
+	9. fix NPE in quick tile service
+	10. Add floating text selection (disabled by default, fix #195)
+	11. New Crowdin updates (#210)
+	12. remove on longer used components
+**Changed Methods**:
+
+		0. <com.fmsys.snapdrop.SettingsFragment: boolean showEditTextPreferenceWithResetPossibility(androidx.preference.Preference,java.lang.String,java.lang.String,androidx.core.util.Consumer)>
+			Changed code in this method:
+				@@ -150,7 +198,7 @@ 
+				         final AlertDialog.Builder builder = new AlertDialog.Builder(getContext())
+				                 .setTitle(pref.getTitle())
+				                 .setView(dialogView)
+				-                .setPositiveButton(android.R.string.ok, (dialog, id) -> setPreferenceValue(pref.getKey(), editText.getText().toString(), onPreferenceChangeCallback))
+				+                .setPositiveButton(android.R.string.ok, (dialog, id) -> setPreferenceValue(pref.getKey(), editText.getText().toString().trim(), onPreferenceChangeCallback))
+				                 .setNegativeButton(R.string.reset, (dialog, id) -> setPreferenceValue(pref.getKey(), null, onPreferenceChangeCallback));
+				         builder.create().show();
+				         return true;
+
+		0. <com.fmsys.snapdrop.SettingsFragment: void onCreatePreferences(android.os.Bundle,java.lang.String)>
+			Changed code in this method:
+				@@ -74,6 +81,17 @@ 
+				             return true;
+				         });
+				 
+				+        final Preference floatingTextSelectionPref = findPreference(getString(R.string.pref_floating_text_selection));
+				+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+				+            floatingTextSelectionPref.setVisible(true);
+				+            floatingTextSelectionPref.setOnPreferenceChangeListener((pref, newValue) -> {
+				+                getContext().getPackageManager().setComponentEnabledSetting(
+				+                        new ComponentName(getContext(), FloatingTextActivity.class),
+				+                        (Boolean) newValue ? PackageManager.COMPONENT_ENABLED_STATE_ENABLED : PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+				+                        PackageManager.DONT_KILL_APP);
+				+                return true;
+				+            });
+				+        }
+				 
+				         final Preference deviceNamePref = findPreference(getString(R.string.pref_device_name));
+				         deviceNamePref.setOnPreferenceClickListener(pref -> showEditTextPreferenceWithResetPossibility(pref, "Android ", "", newValue -> updateDeviceNameSummary(deviceNamePref)));
+				@@ -82,7 +100,37 @@ 
+				         final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+				 
+				         final Preference baseUrlPref = findPreference(getString(R.string.pref_baseurl));
+				-        baseUrlPref.setOnPreferenceClickListener(pref -> showEditTextPreferenceWithResetPossibility(pref, "", getString(R.string.baseURL), newValue -> baseUrlPref.setSummary(newValue != null ? newValue : getString(R.string.baseURL))));
+				+        baseUrlPref.setOnPreferenceClickListener(pref -> showEditTextPreferenceWithResetPossibility(pref, "", getString(R.string.baseURL), newValue -> {
+				+
+				+            if (newValue == null) {
+				+                baseUrlPref.setSummary(getString(R.string.baseURL));
+				+            } else {
+				+                final Dialog dialog = new Dialog(getContext());
+				+                dialog.setContentView(R.layout.progress_dialog);
+				+
+				+                final RequestQueue queue = Volley.newRequestQueue(getContext());
+				+                final StringRequest request = new StringRequest(newValue,
+				+                        response -> {
+				+                            dialog.cancel();
+				+                            if (response.toLowerCase().contains("snapdrop")) {
+				+                                baseUrlPref.setSummary(newValue);
+				+                            } else {
+				+                                Snackbar.make(requireView(), R.string.baseurl_no_snapdrop_instance, Snackbar.LENGTH_LONG).show();
+				+                                baseUrlPref.setSummary(getString(R.string.baseURL));
+				+                                setPreferenceValue(baseUrlPref.getKey(), null, null);
+				+                            }
+				+                        }, error -> {
+				+                    dialog.cancel();
+				+                    Snackbar.make(requireView(), R.string.baseurl_check_instance_failed, Snackbar.LENGTH_LONG).show();
+				+                    baseUrlPref.setSummary(getString(R.string.baseURL));
+				+                    setPreferenceValue(baseUrlPref.getKey(), null, null);
+				+                });
+				+
+				+                queue.add(request);
+				+                dialog.setOnDismissListener(d -> request.cancel());
+				+                dialog.show();
+				+            }
+				+        }));
+				         baseUrlPref.setSummary(preferences.getString(baseUrlPref.getKey(), getString(R.string.baseURL)));
+				 
+				         final Preference saveLocationPref = findPreference(getString(R.string.pref_save_location));
+

@@ -1,0 +1,32 @@
+**App Description**: Transfer files seamlessly between all your devices - Snapdrop.
+**Entry Method Signature**: <com.fmsys.snapdrop.MainActivity: void onBackPressed()>
+**Method Line Number(start,end)**: (335, 345)
+**Commit Messages between two versions**:
+	1. make links clickable in attribution section
+	2. add Material Design 3 for the app icon
+	3. Update translation_validation.yaml
+	4. New Crowdin updates (#216)
+	5. Update README.md
+	6. some cleanup
+	7. New Bugfix Release - v1.11.1
+**Partial call graph**:
+	- **Nodes(Reachable methods(and their changes) from entry method)**:
+
+		0. <com.fmsys.snapdrop.MainActivity: void onBackPressed()>
+			Changed code in this method:
+				@@ -336,7 +334,6 @@ 
+				     public void onBackPressed() {
+				         if (binding.webview.getUrl() != null && binding.webview.getUrl().endsWith("#about")) {
+				             binding.webview.loadUrl(baseURL + "#");
+				-            currentlyAtAboutPage = false;
+				         } else if (dialogVisible) {
+				             binding.webview.loadUrl(JavaScriptInterface.getAssetsJS(this, "closeDialogs.js"));
+				         } else {
+				@@ -344,17 +341,6 @@ 
+				         }
+				     }
+		1. <com.fmsys.snapdrop.JavaScriptInterface: java.lang.String getAssetsJS(android.content.Context,java.lang.String)>
+		2. <androidx.activity.ComponentActivity: void onBackPressed()>
+	- **Edges(Calling relationship between reachable methods)**:
+		<0, 1>
+		<0, 2>

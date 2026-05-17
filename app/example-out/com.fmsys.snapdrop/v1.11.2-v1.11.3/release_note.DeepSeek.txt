@@ -1,0 +1,3 @@
+- Fixed an issue where custom JavaScript code was not being executed when sharing content or during file transfers in the web view.  
+
+(Note: The three original entries were merged into one concise bullet point since they all describe the same underlying issue affecting JavaScript execution in different contexts.)
