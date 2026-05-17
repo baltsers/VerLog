@@ -13,7 +13,7 @@
 
 ## Contents
 
-The artifact contains 288 file(s) including Python, Java, Shell scripts, Config files, Data files, and Documentation.
+The artifact contains 289 file(s) including Python, Java, Shell scripts, Config files, Data files, and Documentation.
 
 ```
 ├── __MACOSX
@@ -47,6 +47,7 @@ The artifact contains 288 file(s) including Python, Java, Shell scripts, Config 
 │   ├── runVerlogDemo.sh
 │   ├── Verlog-code-1.0-SNAPSHOT.jar
 │   └── verlog.sh
+├── artifact-description.pdf
 ├── benchmark_apps_versions.csv
 └── README.md
 ```
